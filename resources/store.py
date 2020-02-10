@@ -10,6 +10,7 @@ ERROR_INSERTING = "An error occurred while creating the store."
 store_schema = StoreSchema()
 store_list_schema = StoreSchema(many=True)
 
+
 class Store(Resource):
     @classmethod
     def get(cls, name: str):
@@ -44,6 +45,6 @@ class Store(Resource):
 
 
 class StoreList(Resource):
-    @classmethod    
+    @classmethod
     def get(cls):
         return {"stores": store_lsit_schema.dump(StoreModel.find_all())}

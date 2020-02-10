@@ -35,7 +35,7 @@ class Item(Resource):
 
         item_json = request.get_json()
         item_json["name"] = name
-        
+
         item = item_schema.load(item_json)
 
         try:
@@ -64,7 +64,7 @@ class Item(Resource):
         else:
             item_json["name"] = name
             item = item_schema.load(item_json)
-            
+
         item.save_to_db()
 
         return item_schema.dump(item), 200
