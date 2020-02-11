@@ -1,0 +1,30 @@
+{
+    "mailgun_failed_load_api_key": "Failed to load {}.",
+    "mailgun_failed_send": "Error in sending the account activation email, user registration failed.",
+
+    "confirmation_not_found": "No user found with that confirmation id. Please check the confirmation link in your email, or click the link below to resend a new confirmation link",
+    "confirmation_expired": "This confirmation link has expired. Please check your email for a newer link, or click below to resend.",
+    "confirmation_already_confirmed": "This account has already been confirmed!",
+    "confirmation_resend_failed": "Internal server error. Failed to resend confirmation email.",
+    "confirmation_resend_successful": "Confirmation email successfully resent.",
+
+    "item_name_already_exists": "An item with name '{}' already exists.",
+    "item_not_found": "Item not found.",
+    "item_deleted": "Item deleted.",
+    "item_error_inserting": "An error occurred while inserting the item.",
+
+    "store_not_found": "Store not found.",
+    "store_already_exists": "A store with name '{}' already exists.",
+    "store_deleted": "Store deleted.",
+    "store_creation_error": "An error occurred while creating the store.",
+
+    "user_email_already_exists": "A user with that email already exists.",
+    "user_already_exists": "A user with that username already exists.",
+    "user_created_successfully": "Account created successfully. Please check your email for your account activation link.",
+    "user_not_found": "User not found.",
+    "user_deleted": "User deleted.",
+    "user_invalid_credentials": "Invalid credentials.",
+    "user_logged_out": "User <id={}> successfully logged out.",
+    "user_not_yet_activated": "User account not yet activated. Please check your email for the activation link.",
+    "user_failed_to_create": "Failed to create user. Sorry!"
+}

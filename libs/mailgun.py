@@ -1,10 +1,14 @@
+"""
+libs.mailgun
+
+Call Mailgun.send_email to send emails.
+"""
+
 import os
 
 from typing import List
 from requests import Response, post
-
-FAILED_TO_LOAD = "Failed to load {}."
-EMAIL_ERROR = "Error in sending the account activation email, user registration failed."
+from libs.strings import gettext
 
 
 class MailgunException(Exception):
@@ -24,9 +28,9 @@ class Mailgun:
         cls, email: List[str], subject: str, text: str, html: str
     ) -> Response:
         if cls.MAILGUN_API_KEY is None:
-            raise MailgunException(FAILED_TO_LOAD.format("Mailgun API key"))
+            raise MailgunException(gettext("mailgun_failed_load_api_key").format("Mailgun API key"))
         if cls.MAILGUN_DOMAIN is None:
-            raise MailgunException(FAILED_TO_LOAD.format("Mailgun domain"))
+            raise MailgunException(gettext("mailgun_failed_load_api_key").format("Mailgun domain"))
 
         response = post(
             f"https://api.mailgun.net/v3/{cls.MAILGUN_DOMAIN}/messages",
@@ -41,7 +45,7 @@ class Mailgun:
         )
 
         if response.status_code != 200:
-            raise MailgunException(EMAIL_ERROR)
+            raise MailgunException(gettext("mailgun_failed_send"))
 
         return response
 

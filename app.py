@@ -8,16 +8,10 @@ from marshmallow import ValidationError
 from db import db
 from ma import ma
 from blacklist import BLACKLIST
-from resources.user import (
-    UserRegister,
-    UserLogin,
-    User,
-    TokenRefresh,
-    UserLogout,
-    ActivateUser,
-)
+from resources.user import UserRegister, UserLogin, User, TokenRefresh, UserLogout
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
+from resources.confirmation import Confirmation, ConfirmationByUser
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
@@ -59,9 +53,10 @@ api.add_resource(Item, "/item/<string:name>")
 api.add_resource(UserRegister, "/register")
 api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(UserLogin, "/login")
-api.add_resource(ActivateUser, "/activate/<int:user_id>")
 api.add_resource(TokenRefresh, "/refresh")
 api.add_resource(UserLogout, "/logout")
+api.add_resource(Confirmation, "/user_confirm/<string:confirmation_id>")
+api.add_resource(ConfirmationByUser, "/confirmation/user/<int:user_id>")
 
 
 if __name__ == "__main__":

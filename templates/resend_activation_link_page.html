@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Confirmation</title>
+    <link href="{{url_for('static', filename='confirmation_page.css')}}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="jumbotron text-center full-height">
+            <h1>Activation failed</h1>
+            <p><em>{{EXPIRED}}.</em></p>
+        </div>
+        <form action="/confirmation/user/{{user_id}}", method='post'>
+            <br><br>
+            <input class="submit" id="submit" name="submit"
+                    type="submit" value="Yes" />
+        </form>
+
+        <footer class="text-center">
+            <hr>
+            <p><a href="http://blog.tecladocode.com/" target="_blank">Teclado</a></p>
+        </footer>
+    </div>
+    
+</body>
+</html>
