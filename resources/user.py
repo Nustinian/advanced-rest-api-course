@@ -78,7 +78,6 @@ class UserLogin(Resource):
         # this is what the `authenticate()` function did in security.py
         if user and safe_str_cmp(user.password, user_data.password):
             confirmation = user.most_recent_confirmation
-            print(confirmation.confirmed)
             if not confirmation.confirmed:
                 return {"message": gettext("user_not_yet_activated")}, 400
             access_token = create_access_token(identity=user.id, fresh=True)

@@ -26,5 +26,15 @@
     "user_invalid_credentials": "Invalid credentials.",
     "user_logged_out": "User <id={}> successfully logged out.",
     "user_not_yet_activated": "User account not yet activated. Please check your email for the activation link.",
-    "user_failed_to_create": "Failed to create user. Sorry!"
+    "user_failed_to_create": "Failed to create user. Sorry!",
+
+    "image_uploaded": "{} uploaded.",
+    "image_illegal_extension": "Extension {} is not allowed.",
+    "image_illegal_file_name": "Illegal file name {} requested.",
+    "image_not_found": "{} not found.",
+    "image_deleted": "{} deleted successfully.",
+    "image_delete_failed": "Unable to delete {}.",
+    "avatar_uploaded": "Avatar uploaded successfully.",
+    "avatar_delete_failed": "Unable to delete old avatar.",
+    "avatar_not_found": "Avatar not found."
 }
