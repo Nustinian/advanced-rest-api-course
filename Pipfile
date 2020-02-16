@@ -16,6 +16,8 @@ marshmallow-sqlalchemy = "*"
 requests = "*"
 python-dotenv = "*"
 flask-uploads = "*"
+psycopg2 = "*"
+flask-migrate = "*"
 
 [requires]
 python_version = "3.7"

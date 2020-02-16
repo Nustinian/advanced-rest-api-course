@@ -35,7 +35,6 @@ class UserRegister(Resource):
             confirmation = ConfirmationModel(user.id)
             confirmation.save_to_db()
             user.send_confirmation_email()
-            print("success!")
         except MailgunException as e:
             user.delete_from_db()
             return {"message": str(e)}, 500

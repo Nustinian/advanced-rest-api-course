@@ -4,6 +4,7 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_uploads import configure_uploads, patch_request_class
+from flask_migrate import Migrate
 from marshmallow import ValidationError
 from dotenv import load_dotenv
 
@@ -25,6 +26,7 @@ app.config.from_envvar("APPLICATION_SETTINGS")
 patch_request_class(app, 10 * 1024 * 1024)
 configure_uploads(app, IMAGE_SET)
 api = Api(app)
+migrate = Migrate(app, db)
 
 
 @app.before_first_request
