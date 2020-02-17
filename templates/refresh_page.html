@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Refresh</title>
+    </head>
+    <body>
+        <form action="/refresh" method="post">
+            <input name="csrf_token" type="hidden" value="{{ csrf_token }}">
+            <button type="submit">Refresh</button>
+        </form>
+        <div class="message">
+            {{text | safe}}
+        </div>
+        <a href="/">Return to home</a>
+    </body>
+</html>

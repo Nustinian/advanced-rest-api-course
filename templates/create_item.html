@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Create Item</title>
+    </head>
+    <body>
+        <h3>Create</h3>
+        <form action="/item/create" method="post">
+            <input name="csrf_token" type="hidden" value="{{ csrf_token }}">
+            <label>Item Name</label>
+            <input type="text" name="name" required>
+            <label>Price</label>
+            <input type="float" name="price" required>
+            <label>Store ID</label>
+            <input type="int" name="store_id" required>
+            <button type="submit">Create</button>
+        </form>
+        <h3>Update</h3>
+        <form action="/item/create">
+            <input type="hidden" name="_method" value="put">
+            <input name="csrf_token" type="hidden" value="{{ csrf_token }}">
+            <label>Item Name</label>
+            <input type="text" name="name" required>
+            <label>Price</label>
+            <input type="float" name="price" required>
+            <label>Store ID</label>
+            <input type="int" name="store_id" required>
+            <button type="submit">Update</button>
+        </form>
+        <a href="/">Return to home</a>
+    </body>
+</html>

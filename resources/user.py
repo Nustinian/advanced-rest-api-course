@@ -1,6 +1,7 @@
 import traceback
-from flask import request
+from flask import request, jsonify, redirect, make_response, render_template
 from flask_restful import Resource
+from marshmallow.exceptions import ValidationError
 from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import (
     create_access_token,
@@ -8,7 +9,11 @@ from flask_jwt_extended import (
     jwt_refresh_token_required,
     get_jwt_identity,
     jwt_required,
+    jwt_optional,
     get_raw_jwt,
+    set_access_cookies,
+    set_refresh_cookies,
+    unset_jwt_cookies,
 )
 from libs.mailgun import MailgunException
 from libs.strings import gettext
@@ -23,7 +28,15 @@ user_schema = UserSchema()
 class UserRegister(Resource):
     @classmethod
     def post(cls):
-        user = user_schema.load(request.get_json())
+        try:
+            user = user_schema.load(request.get_json())
+        except ValidationError:
+            username = request.form["username"]
+            password = request.form["password"]
+            email = request.form["email"]
+            user = user_schema.load(
+                {"username": username, "password": password, "email": email}
+            )
 
         if UserModel.find_by_username(user.username):
             return {"message": gettext("user_already_exists")}, 400
@@ -70,7 +83,14 @@ class User(Resource):
 class UserLogin(Resource):
     @classmethod
     def post(cls):
-        user_data = user_schema.load(request.get_json(), partial=("email",))
+        try:
+            user_data = user_schema.load(request.get_json(), partial=("email",))
+        except ValidationError:
+            username = request.form["username"]
+            password = request.form["password"]
+            user_data = user_schema.load(
+                {"username": username, "password": password}, partial=("email",)
+            )
 
         user = UserModel.find_by_username(user_data.username)
 
@@ -81,25 +101,43 @@ class UserLogin(Resource):
                 return {"message": gettext("user_not_yet_activated")}, 400
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
-            return {"access_token": access_token, "refresh_token": refresh_token}, 200
-
-        return {"message": gettext("user_invalid_credentials")}, 401
+            resp = make_response(redirect("/login/success", code=302))
+            set_access_cookies(resp, access_token)
+            set_refresh_cookies(resp, refresh_token)
+            return resp
+        return redirect("/login/fail", code=401)
 
 
 class UserLogout(Resource):
+    @classmethod
+    @jwt_required
+    def get(cls):
+        resp = make_response(render_template("/logout_page.html", csrf_token=(get_raw_jwt() or {}).get("csrf")))
+        return resp
+
     @classmethod
     @jwt_required
     def post(cls):
         jti = get_raw_jwt()["jti"]  # jti is "JWT ID", a unique identifier for a JWT.
         user_id = get_jwt_identity()
         BLACKLIST.add(jti)
-        return {"message": gettext("user_logged_out").format(user_id)}, 200
+        resp = make_response(redirect(f"/logout/{user_id}", code=200))
+        unset_jwt_cookies(resp)
+        return resp
 
 
 class TokenRefresh(Resource):
     @classmethod
     @jwt_refresh_token_required
+    def get(cls):
+        resp = make_response(render_template("/refresh_page.html", csrf_token=(get_raw_jwt() or {}).get("csrf")))
+        return resp
+
+    @classmethod
+    @jwt_refresh_token_required
     def post(cls):
         current_user = get_jwt_identity()
         new_token = create_access_token(identity=current_user, fresh=False)
-        return {"access_token": new_token}, 200
+        resp = make_response(render_template("post_refresh.html", code=302))
+        set_access_cookies(resp, new_token)
+        return resp

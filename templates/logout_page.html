@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Logout</title>
+    </head>
+    <body>
+        <form action="/logout" method="post">
+            <input name="csrf_token" type="hidden" value="{{ csrf_token }}">
+            <button type="submit">Logout</button>
+        </form>
+        <a href="/">Return to home</a>
+    </body>
+</html>

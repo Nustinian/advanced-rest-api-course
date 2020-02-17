@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User page</title>
+    </head>
+    <body>
+        <h3>Register</h3>
+        <form action="/register" method="post">
+            <label>Username</label>
+            <input type="text" name="username" required>
+            <label>Email</label>
+            <input type="email" name="email" required>
+            <label>Password</label>
+            <input type="password" name="password" required>
+            <button type="submit">Register</button>
+        </form>
+        <h3>Login</h3>
+        <form action="/login" method="post">
+            <label>Username</label>
+            <input type="text" name="username" required>
+            <label>Password</label>
+            <input type="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <h3>Logout page</h3>
+        <a href="/logout">Logout page</a>
+        <h3>Token Refresh</h3>
+        <a href="/refresh">Refresh page</a>
+    </body>
+</html>
